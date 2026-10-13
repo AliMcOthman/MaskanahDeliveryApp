@@ -1,69 +1,101 @@
-# توصيل مسكنة — Maskanah Delivery
+# 🛵 Maskanah Delivery – Lieferdienst für Maskanah
 
-تطبيق ويب احترافي لطلب التوصيل في **مسكنة**، بواجهة عربية حديثة (RTL)،
-يسمح للعميل بكتابة طلبه وإرساله مباشرة عبر **واتساب** مع حساب رسوم التوصيل
-تلقائياً حسب الموقع الجغرافي.
+Eine moderne Webanwendung für Essens- und Lieferbestellungen in **Maskanah, Syrien**. Die Anwendung bietet eine benutzerfreundliche arabische Oberfläche mit RTL-Layout (Rechts-nach-links) und ermöglicht es Kunden, ihre Bestellungen direkt über **WhatsApp** zu übermitteln.
 
-A modern Arabic (RTL) delivery-ordering web app for **Maskanah**.
-Customers write their order and send it directly via **WhatsApp**, with
-the delivery fee calculated automatically from their GPS location.
+Die Liefergebühren werden automatisch anhand des GPS-Standorts des Kunden und der Entfernung zum Hauptmarkt in Maskanah berechnet.
 
----
+## ✨ Funktionen
 
-## ✨ المزايا / Features
+- 🛵 **Modernes, responsives Design:** Arabische RTL-Oberfläche, optimiert für Smartphones, Tablets und Desktop-Computer.
+- 💬 **WhatsApp-Bestellung:** Direkte Übermittlung der Bestellung an die autorisierte WhatsApp-Nummer des Lieferdienstes.
+- 📍 **Automatische Standortbestimmung:** Ermittlung des Kundenstandorts über die Geolocation-API des Browsers.
+- 📏 **Entfernungsberechnung:** Berechnung der Entfernung zum Hauptmarkt in Maskanah mithilfe der Haversine-Formel.
+- 💰 **Automatische Liefergebühren:**
+  - 150 SYP für die ersten 1.500 Meter.
+  - Zusätzlich 5 SYP für jeweils weitere 100 Meter oder einen begonnenen 100-Meter-Abschnitt.
+- 🎯 **Standortgenauigkeit:** Überprüfung der GPS-Genauigkeit vor dem Absenden der Bestellung.
+- ⚠️ **Fehlerbehandlung:** Verständliche Meldungen bei verweigerter Standortfreigabe, nicht verfügbarer Geolocation oder Zeitüberschreitung.
+- 📱 **Progressive Web App (PWA):** Installierbare Webanwendung für Android und iOS mithilfe von `manifest.json` und `sw.js`.
+- 🧾 **Übersichtliche WhatsApp-Nachricht:** Enthält ausschließlich die Bestellung, den Google-Maps-Link, die Koordinaten und die Liefergebühr.
 
-- 🛵 واجهة عربية RTL حديثة ومتجاوبة (جوال / لوحي / حاسوب) — Premium mobile-first RTL UI
-- 💬 إرسال الطلب مباشرة عبر واتساب إلى رقم التوصيل المصرّح به
-- 📍 تحديد موقع العميل تلقائياً (Geolocation) لحساب رسوم التوصيل
-- 📏 حساب المسافة من **السوق الرئيسي في مسكنة** بطريقة هافرساين (Haversine)
-- 💰 رسوم توصيل ثابتة المنطق: `150 ل.س` لأول 1500م، ثم `+5 ل.س` لكل 100م إضافي (تقريب للأعلى)
-- 🎯 التحقق من دقة الموقع قبل إرسال الطلب، مع رسائل عربية واضحة
-- ⚠️ معالجة كاملة لأخطاء تحديد الموقع (رفض الإذن / عدم التوفر / انتهاء الوقت)
-- 📱 **تطبيق قابل للتثبيت (PWA)** على Android و iOS — `manifest.json` + `sw.js`
-- 🧾 رسالة واتساب نظيفة تحتوي فقط: الطلب، رابط خرائط Google، الإحداثيات، ورسوم التوصيل
+## 🚀 Anwendung starten
 
-## 🚀 التشغيل / Run
+1. Öffne die Website.
+2. Gib deine Bestellung ein.
+3. Erlaube den Zugriff auf deinen Standort.
+4. Prüfe die berechnete Liefergebühr.
+5. Klicke auf **Order Now**, um die Bestellung über WhatsApp zu senden.
 
-اكتب الطلب في الصفحة واضغط **Order Now**. يعمل الموقع بشكل كامل من الملفات مباشرة،
-لكن تحديد الموقع وتثبيت التطبيق يحتاجان إلى **HTTPS** أو `localhost`.
+Für eine lokale Vorschau kannst du Python verwenden:
 
 ```bash
-# خيار سريع للمعاينة المحلية
 python3 -m http.server 8080
-# ثم افتح http://localhost:8080
 ```
 
-## 📦 الرفع إلى GitHub / Deploy
+Öffne anschließend im Browser:
+
+```text
+http://localhost:8080
+```
+
+**Hinweis:** Die Geolocation-Funktion und die Installation als PWA benötigen in der Regel eine sichere Verbindung über HTTPS oder eine lokale Entwicklungsumgebung wie `localhost`.
+
+## 📦 Deployment
+
+Das Projekt kann auf verschiedenen Hosting-Plattformen veröffentlicht werden:
+
+- GitHub Pages
+- Netlify
+- Vercel
+
+Alternativ kann das bereitgestellte Skript verwendet werden:
 
 ```bash
 ./push-to-github.sh
 ```
 
-أو ارفع المجلد إلى أي استضافة HTTPS مجانية: **Netlify / Vercel / GitHub Pages**.
+## 🧩 Projektstruktur
 
-## 🧩 هيكل المشروع / Structure
-
-```
+```text
 Maskanah-delivery/
-├── index.html          # الصفحة الرئيسية (تحتوي وسوم التطبيق PWA)
-├── manifest.json       # تعريف التطبيق للتثبيت
-├── sw.js               # Service Worker (عمل دون اتصال)
-├── css/styles.css      # التنسيقات
-├── js/app.js           # منطق الطلب والواتساب
-└── icons/              # أيقونات التطبيق
+├── index.html          # Hauptseite und PWA-Metadaten
+├── manifest.json       # Konfiguration für die App-Installation
+├── sw.js               # Service Worker für Offline-Funktionen
+├── css/
+│   └── styles.css      # Gestaltung und responsives Layout
+├── js/
+│   └── app.js          # Bestelllogik, Geolocation und WhatsApp
+└── icons/              # App-Symbole
 ```
 
-## ⚙️ إعدادات قابلة للتعديل (في `js/app.js`)
+## ⚙️ Konfiguration
 
-| الإعداد | القيمة | الوصف |
-|---------|--------|-------|
-| `referencePoint` | `35.967665, 38.030636` | مركز السوق الرئيسي في مسكنة |
-| `maxAllowedAccuracy` | `100` متر | الحد الأقصى لدقة الموقع المقبولة |
-| `freeDistanceMeters` | `1500` | المسافة المشمولة بالرسم الأساسي |
-| `baseDeliveryFee` | `150` ل.س | الرسم الأساسي |
-| `extraFeePerStep` | `5` ل.س | الزيادة لكل 100 متر إضافي |
-| `whatsappNumber` | `963983926067` | رقم الواتساب المصرّح به |
+Die wichtigsten Einstellungen befinden sich in `js/app.js`:
+
+| Einstellung | Wert | Beschreibung |
+|---|---|---|
+| `referencePoint` | `35.967665, 38.030636` | Koordinaten des Hauptmarkts in Maskanah |
+| `maxAllowedAccuracy` | `100` Meter | Maximal zulässige GPS-Ungenauigkeit |
+| `freeDistanceMeters` | `1500` | Entfernung, die durch die Grundgebühr abgedeckt ist |
+| `baseDeliveryFee` | `150` SYP | Grundgebühr für die Lieferung |
+| `extraFeePerStep` | `5` SYP | Zusätzliche Gebühr pro 100 Meter |
+| `whatsappNumber` | `963983926067` | Autorisierte WhatsApp-Nummer des Lieferdienstes |
+
+## 🛠️ Verwendete Technologien
+
+- HTML5
+- CSS3
+- JavaScript
+- Geolocation API
+- WhatsApp-Link-Integration
+- Google Maps
+- Progressive Web App (PWA)
+- Service Worker
+
+## 🎯 Projektziel
+
+Ziel des Projekts ist es, einen einfachen und praktischen Bestellprozess für Kunden in Maskanah bereitzustellen. Durch die automatische Standortbestimmung und die entfernungsabhängige Berechnung der Liefergebühren wird die Bestellung transparenter und komfortabler.
 
 ---
 
-© توصيل مسكنة — خدمة توصيل سريعة وموثوقة داخل مسكنة 🛵
+© Maskanah Delivery – Schneller und zuverlässiger Lieferservice in Maskanah. 🛵
